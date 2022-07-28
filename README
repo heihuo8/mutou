@@ -1,0 +1,34 @@
+
+1.主控服务器
+web目录为验证文件，请自行搭建
+0.0.0.0改成(自己搭建的验证服务器Ip)
+vi /etc/hosts
+0.0.0.0  auth.cdnfly.cn monitor.cdnfly.cn
+0.0.0.0  auth.cdnfly.cn monitor.cdnfly.cn
+2.主控
+curl -fsSL https://github.com/heihuo8/mutou/raw/main/master.sh -o master.sh && chmod +x master.sh && ./master.sh --es-dir /home/es
+
+3.被控
+curl -fsSL -m 5 https://github.com/heihuo8/mutou/raw/main/agent/agent.sh -o agent.sh || curl -m 5 https://github.com/heihuo8/mutou/raw/main/agent/agent.sh -o agent.sh  && chmod +x agent.sh && ./agent.sh --master-ver v5.1.11 --master-ip ip --es-ip ip --es-pwd passwd
+
+修改为你自身安装节点,或使用默认的github节点安装
+/opt/cdnfly/master/panel/src/views/system/update/index.html
+
+
+主控登录地址为: http://主控IP/
+管理员账号和密码： admin/cdnfly
+普通用户账号和密码： jason/cdnfly
+
+服务器配置要求
+
+主控
+1.内存 - 因为主控安装有Elasticsearch，推荐16G及以上，如果网站访问量比较小，8G也行，至少4G。
+2.硬盘 - 建议固态硬盘, 同样考虑访问日志大小，推荐100G及以上，量小的话都可以。
+3.CPU - CPU至少2核
+4.开放80 88 9200端口
+节点
+
+1.内存 - 至少2G及以上
+2.硬盘 - 根据网站缓存的大小配置
+3.CPU - Nginx主要是跑CPU，所以要想访问性能好，CPU尽量好点。
+4.开放80 443 5000端口
