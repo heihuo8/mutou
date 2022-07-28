@@ -1,0 +1,25 @@
+更新说明：修复节点监控功能
+更新说明：cdnfly把下载文件也加入授权IP验证了，因此下面的文件包里面包含了所有需要下载的文件。
+
+
+cdnfly通过改hosts破解授权方法：
+
+
+首先用以下源码搭建一个站点，绑定域名auth.cdnfly.cn、monitor.cdnfly.cn，注意需要配置伪静态：
+https://vkceyugu.cdn.bspapp.com/VKCEYUGU-10b3891b-be67-4103-a60f-9da1d057470c/708a9a99-d7f4-4626-a6e2-8a80d6b8e49d.zip
+
+
+然后在需要搭建主控的节点上，修改hosts，将 auth.cdnfly.cn、monitor.cdnfly.cn 这2个域名指向刚才的服务器IP
+
+执行以下命令安装主控：
+curl http://auth.cdnfly.cn/master.sh -o master.sh && chmod +x master.sh && ./master.sh --es-dir /home/es
+复制代码
+
+
+
+如果之前安装过官方版，那就只需要改hosts即可。
+
+
+云端节点监控功能说明：
+监控默认是使用云端服务器去请求CDN节点，因此要保持云端和CDN节点之间的网络畅通。另外如果是用宝塔面板，php不要安装bt_safe扩展，否则无法使用tcp类型监控；如果要用ping类型监控，还需要允许exec函数。
+支持多节点监控（和官方一样），要添加其它监控节点，可以编辑config.php配置文件，根据里面的注释说明添加。
